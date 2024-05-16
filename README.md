@@ -26,7 +26,7 @@
 
 ### 基本效果
 
-<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/效果.png" alt="效果图" width="600"/>
+<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/效果/效果.png" alt="效果图" width="600"/>
 
 ### 高亮示例
 
@@ -37,9 +37,9 @@
 ```
 以下是开启高亮后的效果示例：
 
-<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/高亮1.png" alt="效果图" width="600"/>
+<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/效果/高亮1.png" alt="效果图" width="600"/>
 
-<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/高亮2.png" alt="效果图" width="600"/>
+<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/效果/高亮2.png" alt="效果图" width="600"/>
 
 ## 改进建议
 
