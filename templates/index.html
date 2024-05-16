@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>APK签名检测</title>
+    <style>
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            margin: 40px auto; 
+            max-width: 700px; 
+            padding: 20px; 
+            background-color: #f9f9f9; 
+            color: #333; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 { 
+            color: #0056b3; 
+            font-size: 24px; 
+            text-align: center; 
+        }
+        form { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 10px; 
+            margin-top: 20px;
+        }
+        input[type="file"] { 
+            width: 300px; 
+        }
+        input[type="submit"] { 
+            cursor: pointer; 
+            font-size: 16px; 
+            padding: 10px 20px; 
+            color: #fff; 
+            background-color: #007bff; 
+            border: none; 
+            border-radius: 5px; transition: all 0.3s; 
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        pre {
+            margin-top: 20px; 
+            background: #fdfdfd; 
+            padding: 20px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            white-space: pre-wrap; word-wrap: break-word;
+        }
+        .highlight {
+            background-color: yellow;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>APK签名检测</h1>
+    <form enctype="multipart/form-data" action="/upload" method="post">
+        <input type="file" name="apkfile" required />
+        <input type="submit" value="上传并检查" />
+    </form>
+    {{if .Signature}}
+        <h2>签名信息：</h2>
+        <pre id="output">{{.Signature}}</pre>
+    {{end}}
+    <script>
+        var output = document.getElementById('output');
+        if(output) {
+            output.innerHTML = output.innerHTML.replace(
+                /xxx/g, '<span class="highlight">xxx</span>'); // xxx  替换为需要高亮的结果
+        }
+    </script>
+</body>
+</html>
