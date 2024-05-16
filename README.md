@@ -24,11 +24,11 @@
 
 以下是工具的部分截图：
 
-**基本效果**
+### 基本效果
 
 <img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/效果.png" alt="效果图" width="600"/>
 
-**高亮示例**
+### 高亮示例
 
 高亮特定签名信息可以提升阅读体验。以通过修改`templates/index.html`中的以下代码（`xxx`替换为需要高亮的结果）来实现高亮显示：
 
