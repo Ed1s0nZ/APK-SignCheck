@@ -16,6 +16,9 @@ type PageData struct {
 func main() {
 	http.HandleFunc("/", HomePage)
 	http.HandleFunc("/upload", UploadFile)
+	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "templates/favicon.ico")
+	})
 	http.ListenAndServe(":8080", nil)
 }
 
