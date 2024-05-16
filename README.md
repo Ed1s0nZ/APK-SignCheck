@@ -9,5 +9,5 @@
 
 ## 其他
 1、 可通过templates/index.html 中第73行`/xxx/g, '<span class="highlight">xxx</span>');`中的xxx替换为需要高亮的结果，可以高亮展示：
-![效果图](https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/高亮1.png)
-![效果图](https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/高亮2.png)
+<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/高亮1.png" alt="效果图" width="600"/>
+<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/高亮2.png" alt="效果图" width="600"/>
