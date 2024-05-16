@@ -1,5 +1,5 @@
 # APK签名检查工具
-<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/templates/favicon.ico" alt="效果图" width="600"/>
+<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/templates/favicon.ico" alt="效果图" width="300"/>
 
 
 此工具旨在简化APK文件签名的查看过程，通过一个简单易用的Web界面，使非技术人员也能轻松查看APK文件的签名信息。
