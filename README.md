@@ -5,7 +5,7 @@
 公司其他部门非技术同事有需要查看签名的需求，让非技术同事去安装Java环境，再通过终端执行命令去查看有一定门槛，于是写了这个小工具。
 
 ## 效果
-![效果图](https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/效果.png)
+<img src="https://github.com/Ed1s0nZ/APK-SignCheck/blob/main/效果.png" alt="效果图" width="600"/>
 
 ## 其他
 1、 可通过templates/index.html 中第73行`/xxx/g, '<span class="highlight">xxx</span>');`中的xxx替换为需要高亮的结果，可以高亮展示：
