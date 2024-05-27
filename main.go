@@ -88,3 +88,5 @@ func displayResult(w http.ResponseWriter, signature string) {
 	t, _ := template.ParseFiles("templates/index.html")
 	t.Execute(w, data)
 }
+
+
