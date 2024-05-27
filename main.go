@@ -2,8 +2,10 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"io"
+	"mime/multipart"
 	"net/http"
 	"os"
 	"os/exec"
@@ -19,7 +21,7 @@ func main() {
 	http.HandleFunc("/favicon.ico", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "templates/favicon.ico")
 	})
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":808", nil)
 }
 
 func HomePage(w http.ResponseWriter, r *http.Request) {
@@ -29,51 +31,59 @@ func HomePage(w http.ResponseWriter, r *http.Request) {
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
 	// 解析上传的文件
-	r.ParseMultipartForm(500 << 20) // 限制上传大小为500MB
-	file, _, err := r.FormFile("apkfile")
+	file, tempFile, err := parseAndSaveFile(r)
 	if err != nil {
-		http.Error(w, "Error Retrieving the File", http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 	defer file.Close()
-
-	// 创建临时文件存放APK
-	tempFile, err := os.CreateTemp("", "upload-*.apk")
-	if err != nil {
-		http.Error(w, "Error Creating Temp File", http.StatusInternalServerError)
-		return
-	}
 	defer tempFile.Close()
 
-	// 读取上传的文件内容到临时文件
-	// fileBytes, err := io.ReadAll(file)
-	// if err != nil {
-	// 	http.Error(w, "Error Reading File Content", http.StatusInternalServerError)
-	// 	return
-	// }
-	// tempFile.Write(fileBytes)
-
-	// 使用 io.Copy() 代替读后写的操作
-	_, err = io.Copy(tempFile, file)
+	// 检查签名
+	signature, err := checkSignature(tempFile)
 	if err != nil {
-		http.Error(w, "Error Writing File Content", http.StatusInternalServerError)
-		return
-	}
-
-	// 调用keytool命令检查签名
-	cmd := exec.Command("keytool", "-printcert", "-jarfile", tempFile.Name())
-	var out bytes.Buffer
-	cmd.Stdout = &out
-	err = cmd.Run()
-	if err != nil {
-
 		http.Error(w, "Error Running Keytool Command", http.StatusInternalServerError)
 		return
 	}
 
 	// 显示结果
+	displayResult(w, signature)
+}
+
+func parseAndSaveFile(r *http.Request) (multipart.File, *os.File, error) {
+	r.ParseMultipartForm(500 << 20) // 限制上传大小为500MB
+	file, _, err := r.FormFile("apkfile")
+	if err != nil {
+		return nil, nil, fmt.Errorf("error retrieving the file")
+	}
+
+	tempFile, err := os.CreateTemp("", "upload-*.apk")
+	if err != nil {
+		return nil, nil, fmt.Errorf("error creating temp file")
+	}
+
+	_, err = io.Copy(tempFile, file)
+	if err != nil {
+		return nil, nil, fmt.Errorf("error writing file content")
+	}
+
+	return file, tempFile, nil
+}
+
+func checkSignature(tempFile *os.File) (string, error) {
+	cmd := exec.Command("keytool", "-printcert", "-jarfile", tempFile.Name())
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	if err != nil {
+		return "", fmt.Errorf("error running keytool command")
+	}
+	return out.String(), nil
+}
+
+func displayResult(w http.ResponseWriter, signature string) {
 	data := PageData{
-		Signature: out.String(),
+		Signature: signature,
 	}
 	t, _ := template.ParseFiles("templates/index.html")
 	t.Execute(w, data)
